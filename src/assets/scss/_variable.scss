@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;1,6..12,200;1,6..12,300;1,6..12,1000&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.light-mode {
+  --White: #fff;
+  --black: #000;
+}
+
+.dark_theme {
+  --White: #000;
+  --black: #fff;
+}
