@@ -35,4 +35,24 @@ img {
   max-width: 1340px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.search_box {
+  margin-top: 50px;
+  border: 1px solid gray;
+  background-color: white;
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+.search_box span {
+  font-size: 35px;
+  position: relative;
+  top: 7px;
+}
+.search_box input {
+  outline: 0;
+  font-size: 20px;
+  padding: 15px;
+  border: 0;
 }/*# sourceMappingURL=style.css.map */

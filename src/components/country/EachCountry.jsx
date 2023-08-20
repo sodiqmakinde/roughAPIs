@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const EachCountry = () => {
   const [countries, setCountries] = useState([]);
+  const [intialSearch, setintialSearch] = useState("United States");
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
@@ -10,28 +11,51 @@ const EachCountry = () => {
       .then((data) => setCountries(data));
   }, []);
 
-  return (
-    <Country className=" container">
-      {/* Hrer */}
-      {countries.map((item, index) => (
-        <div className="each">
-          <img src={item.flags.png} alt="" />
+  const filterByCountry = countries.filter((country) =>
+    country.name.common.toLowerCase().includes(intialSearch.toLowerCase())
+  );
 
-          <h2>{item.name.common}</h2>
-          <ul>
-            <li>
-              Population: <span>{item.population}</span>
-            </li>
-            <li>
-              Continent: <span>{item.region}</span>
-            </li>
-            <li>
-              Capital: <span>{item.capital}</span>
-            </li>
-          </ul>
-        </div>
-      ))}
-    </Country>
+  return (
+    <section className="container">
+      {/* =========
+      SEARCH BOX
+      ============= */}
+      <div className="search_box">
+        <span class="material-symbols-outlined">search</span>
+        <input
+          value={intialSearch}
+          type="text"
+          onChange={(e) => {
+            setintialSearch(e.target.value);
+          }}
+          placeholder="Search All by Name"
+        />
+      </div>
+      {/* =========
+      SEARCH BOX ENDS
+      ============= */}
+
+      <Country className=" container">
+        {filterByCountry.map((item, index) => (
+          <div className="each">
+            <img src={item.flags.png} alt="" />
+
+            <h2>{item.name.common}</h2>
+            <ul>
+              <li>
+                Population: <span>{item.population}</span>
+              </li>
+              <li>
+                Continent: <span>{item.region}</span>
+              </li>
+              <li>
+                Capital: <span>{item.capital}</span>
+              </li>
+            </ul>
+          </div>
+        ))}
+      </Country>
+    </section>
   );
 };
 
