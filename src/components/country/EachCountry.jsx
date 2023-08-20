@@ -13,7 +13,6 @@ const EachCountry = () => {
   return (
     <Country className=" container">
       {/* Hrer */}
-
       {countries.map((item, index) => (
         <div className="each">
           <img src={item.flags.png} alt="" />
