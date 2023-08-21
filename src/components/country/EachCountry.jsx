@@ -1,60 +1,130 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+// const EachCountry = () => {
+//   const [countries, setCountries] = useState([]);
+//   const [intialSearch, setintialSearch] = useState("");
+
+//   useEffect(() => {
+//     fetch("https://restcountries.com/v3.1/all")
+//       .then((response) => response.json())
+//       .then((data) => setCountries(data));
+//   }, []);
+
+//   const filterByCountry = countries.filter((country) =>
+//     country.name.common.toLowerCase().includes(intialSearch.toLowerCase())
+//   );
+
+//   return (
+//     <section className="container">
+//       {/* =========
+//       SEARCH BOX
+//       ============= */}
+//       <div className="search_box">
+//         <span class="material-symbols-outlined">search</span>
+//         <input
+//           value={intialSearch}
+//           type="text"
+//           onChange={(e) => {
+//             setintialSearch(e.target.value);
+//           }}
+//           placeholder="Search All by Name"
+//         />
+//       </div>
+//       {/* =========
+//       SEARCH BOX ENDS
+//       ============= */}
+
+//       <Country className=" container">
+//         {filterByCountry.map((item, index) => (
+//           <div className="each">
+//             <img src={item.flags.png} alt="" />
+
+//             <h2>{item.name.common}</h2>
+//             <ul>
+//               <li>
+//                 Population: <span>{item.population}</span>
+//               </li>
+//               <li>
+//                 Continent: <span>{item.region}</span>
+//               </li>
+//               <li>
+//                 Capital: <span>{item.capital}</span>
+//               </li>
+//             </ul>
+//           </div>
+//         ))}
+//       </Country>
+//     </section>
+//   );
+// };
+
+// export default EachCountry;
+
 const EachCountry = () => {
   const [countries, setCountries] = useState([]);
-  const [intialSearch, setintialSearch] = useState("United States");
+  const [initialSearch, setInitialSearch] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
       .then((response) => response.json())
-      .then((data) => setCountries(data));
+      .then((data) => {
+        setCountries(data);
+        setLoading(false); // Set loading to false after data is fetched
+      });
   }, []);
 
   const filterByCountry = countries.filter((country) =>
-    country.name.common.toLowerCase().includes(intialSearch.toLowerCase())
+    country.name.common.toLowerCase().includes(initialSearch.toLowerCase())
   );
 
   return (
     <section className="container">
-      {/* =========
-      SEARCH BOX
-      ============= */}
+      {/* SEARCH BOX */}
       <div className="search_box">
-        <span class="material-symbols-outlined">search</span>
+        <span className="material-symbols-outlined">search</span>
         <input
-          value={intialSearch}
+          value={initialSearch}
           type="text"
           onChange={(e) => {
-            setintialSearch(e.target.value);
+            setInitialSearch(e.target.value);
           }}
           placeholder="Search All by Name"
         />
       </div>
-      {/* =========
-      SEARCH BOX ENDS
-      ============= */}
+      {/* SEARCH BOX ENDS */}
 
-      <Country className=" container">
-        {filterByCountry.map((item, index) => (
-          <div className="each">
-            <img src={item.flags.png} alt="" />
+      {loading ? (
+        <div>Loading...</div> // Show loading state
+      ) : (
+        <div>
+          {filterByCountry.length === 0 && initialSearch !== "" ? (
+            <div>No matching countries found.</div> // Display no matches message
+          ) : (
+            <Country className="container">
+              {filterByCountry.map((item, index) => (
+                <div className="each" key={index}>
+                  <img src={item.flags.png} alt="" />
 
-            <h2>{item.name.common}</h2>
-            <ul>
-              <li>
-                Population: <span>{item.population}</span>
-              </li>
-              <li>
-                Continent: <span>{item.region}</span>
-              </li>
-              <li>
-                Capital: <span>{item.capital}</span>
-              </li>
-            </ul>
-          </div>
-        ))}
-      </Country>
+                  <h2>{item.name.common}</h2>
+                  <ul>
+                    <li>
+                      Population: <span>{item.population}</span>
+                    </li>
+                    <li>
+                      Continent: <span>{item.region}</span>
+                    </li>
+                    <li>
+                      Capital: <span>{item.capital}</span>
+                    </li>
+                  </ul>
+                </div>
+              ))}
+            </Country>
+          )}
+        </div>
+      )}
     </section>
   );
 };
